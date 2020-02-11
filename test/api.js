@@ -1,8 +1,8 @@
-import test from 'ava';
+import test from 'ava'
 
 test('x', t => {
-	t.pass();
-});
+  t.pass()
+})
 
 /// import lint from '..';
 
