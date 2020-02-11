@@ -132,13 +132,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm test"
+      "pre-commit": "lint-staged && npm run test"
     }
   },
   "lint-staged": {
     "**/*.js": [
       "pretty-quick --staged",
-      "eslint --fix"
+      "eslint"
     ]
   },
   "prettier": {
