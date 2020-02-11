@@ -1,4 +1,5 @@
 'use strict'
+
 const path = require('path')
 const isUrl = require('is-url-superb')
 const isGithubUrl = require('is-github-url')
