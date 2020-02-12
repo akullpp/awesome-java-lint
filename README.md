@@ -11,7 +11,7 @@ The latest [Node.js](https://nodejs.org) LTS version.
 Without installing it as module or cloning the repository:
 
 ```shell
-npx awesome-java-linter <URL|PATH>
+npx awesome-java-lint <URL|PATH>
 ```
 
 Or with the cloned repository:
