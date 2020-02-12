@@ -1,4 +1,5 @@
 'use strict'
+
 const caseOf = require('case').of
 const emojiRegex = require('emoji-regex')
 const find = require('unist-util-find')
@@ -7,7 +8,11 @@ const isUrl = require('is-url-superb')
 const rule = require('unified-lint-rule')
 const toString = require('mdast-util-to-string')
 const visit = require('unist-util-visit')
+
+const Maybe = require('../lib/Maybe')
+const Message = require('../lib/Message')
 const identifierWhitelist = require('../lib/identifier-whitelist')
+const hasInvalidStart = require('./list-item-start')
 
 // Valid casings for first text word in list item descriptions
 const listItemPrefixCaseWhitelist = new Set([
@@ -271,6 +276,7 @@ function tokenizeWords(text) {
 }
 
 function validateListItemPrefixCasing(prefix, file) {
+  const setMessage = Message(file, prefix)
   const strippedPrefix = prefix.value.slice(3)
   const [firstWord] = tokenizeWords(strippedPrefix)
 
@@ -281,6 +287,8 @@ function validateListItemPrefixCasing(prefix, file) {
     )
     return false
   }
+
+  Maybe.of(hasInvalidStart(firstWord)).map(setMessage)
 
   if (!listItemPrefixCaseWhitelist.has(caseOf(firstWord))) {
     if (!/\d/.test(firstWord) && !/^["'(]/.test(firstWord)) {
