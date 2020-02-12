@@ -19,7 +19,12 @@ const listItemPrefixCaseWhitelist = new Set([
 ])
 
 // Valid node types in list item link
-const listItemLinkNodeWhitelist = new Set(['inlineCode', 'text'])
+const listItemLinkNodeWhitelist = new Set([
+  'inlineCode',
+  'text',
+  // Specific to awesome-java: We have a small icon to mark commercial products.
+  'imageReference',
+])
 
 // Valid node types in list item descriptions
 const listItemDescriptionNodeWhitelist = new Set([
