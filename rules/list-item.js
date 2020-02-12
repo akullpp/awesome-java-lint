@@ -266,7 +266,8 @@ function validateListItemSpecialCases(description, descriptionText) {
 }
 
 function tokenizeWords(text) {
-  return text.split(/[- ;./]/).filter(Boolean)
+  // Fix contractions with "'", e.g. RedHat's ...
+  return text.split(/[- ;./']/).filter(Boolean)
 }
 
 function validateListItemPrefixCasing(prefix, file) {
