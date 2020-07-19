@@ -8,7 +8,7 @@ const visit = require('unist-util-visit')
 module.exports = rule('remark-lint:awesome-license', (ast, file) => {
   const license = find(
     ast,
-    node =>
+    (node) =>
       node.type === 'heading' &&
       (toString(node) === 'Licence' || toString(node) === 'License'),
   )
@@ -40,7 +40,7 @@ module.exports = rule('remark-lint:awesome-license', (ast, file) => {
     file.message('License must not be empty', license)
   }
 
-  visit(content, 'image', node => {
+  visit(content, 'image', (node) => {
     if (/\.png/i.test(node.url)) {
       file.message('License image must be SVG', node)
       return false

@@ -4,7 +4,7 @@ const meow = require('meow')
 const findReadmeFile = require('./lib/find-readme-file')
 const awesomeLint = require('.')
 
-const getReporter = name => {
+const getReporter = (name) => {
   // Check if reporter is an npm package
   try {
     return require(name).report

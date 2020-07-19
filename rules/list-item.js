@@ -8,6 +8,7 @@ const isUrl = require('is-url-superb')
 const rule = require('unified-lint-rule')
 const toString = require('mdast-util-to-string')
 const visit = require('unist-util-visit')
+const got = require('got')
 
 const Maybe = require('../lib/Maybe')
 const Message = require('../lib/Message')
@@ -27,7 +28,7 @@ const listItemPrefixCaseWhitelist = new Set([
 const listItemLinkNodeWhitelist = new Set([
   'inlineCode',
   'text',
-  // Specific to awesome-java: We have a small icon to mark commercial products.
+  // JAVA: We have a small icon to mark commercial products.
   'imageReference',
 ])
 
@@ -129,7 +130,7 @@ function validateList(list, file) {
   }
 }
 
-function validateListItemLink(link, file) {
+async function validateListItemLink(link, file) {
   if (link.type !== 'link') {
     file.message('Invalid list item link', link)
     return false
@@ -153,6 +154,19 @@ function validateListItemLink(link, file) {
     }
   }
 
+  try {
+    await got(link.url, { method: 'HEAD' })
+  } catch (error) {
+    if (error.response && error.response.statusCode === 405) {
+      try {
+        await got(link.url)
+      } catch (getError) {
+        console.log(getError)
+      }
+    } else {
+      console.error(`${link.url}\n${error}\n----\n`)
+    }
+  }
   return true
 }
 
@@ -271,7 +285,7 @@ function validateListItemSpecialCases(description, descriptionText) {
 }
 
 function tokenizeWords(text) {
-  // Fix contractions with "'", e.g. RedHat's ...
+  // JAVA: Fix contractions with "'", e.g. RedHat's ...
   return text.split(/[- ;./']/).filter(Boolean)
 }
 

@@ -13,8 +13,8 @@ const badgeSrcUrlWhitelist = new Set([
   'https://awesome.re/badge-flat2.svg',
 ])
 
-const isValidBadgeUrl = url => badgeUrlWhitelist.has(url)
-const isValidBadgeSrcUrl = url => badgeSrcUrlWhitelist.has(url)
+const isValidBadgeUrl = (url) => badgeUrlWhitelist.has(url)
+const isValidBadgeSrcUrl = (url) => badgeSrcUrlWhitelist.has(url)
 
 module.exports = rule('remark-lint:awesome-badge', (ast, file) => {
   visit(ast, 'heading', (node, index) => {

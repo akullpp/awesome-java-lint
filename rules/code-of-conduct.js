@@ -14,7 +14,7 @@ module.exports = rule('remark-lint:awesome-code-of-conduct', (ast, file) => {
 
   const placeholder = find(
     ast,
-    node =>
+    (node) =>
       node.type === 'linkReference' && node.label === 'INSERT EMAIL ADDRESS',
   )
   if (placeholder) {
@@ -28,7 +28,7 @@ module.exports = rule('remark-lint:awesome-code-of-conduct', (ast, file) => {
   if (findAuthorName(file) !== authorName) {
     const email = find(
       ast,
-      node => node.type === 'text' && node.value.includes(authorEmail),
+      (node) => node.type === 'text' && node.value.includes(authorEmail),
     )
     if (email) {
       file.message('The default email must be replaced with yours', email)

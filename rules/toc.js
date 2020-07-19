@@ -27,7 +27,7 @@ module.exports = rule('remark-lint:awesome-toc', (ast, file) => {
 
   const toc = find(
     ast,
-    node =>
+    (node) =>
       node.type === 'heading' &&
       node.depth === 2 &&
       toString(node).trim() === 'Contents',
@@ -55,7 +55,7 @@ module.exports = rule('remark-lint:awesome-toc', (ast, file) => {
   const headingsPost = findAllAfter(ast, toc, {
     type: 'heading',
     depth: 2,
-  }).filter(node => !sectionHeadingBlacklist.has(toString(node)))
+  }).filter((node) => !sectionHeadingBlacklist.has(toString(node)))
 
   if (headingsPost.length === 0) {
     file.message('Missing content headers', ast)
@@ -86,7 +86,7 @@ module.exports = rule('remark-lint:awesome-toc', (ast, file) => {
 function buildHeadingLinks(ast) {
   const links = {}
 
-  visit(ast, 'heading', node => {
+  visit(ast, 'heading', (node) => {
     const text = toString(node)
     const slug = slugger.slug(text)
     const link = `#${slug}`
@@ -103,7 +103,7 @@ function validateListItems({ ast, file, list, headingLinks, headings, depth }) {
   if (list) {
     for (; index < list.children.length; ++index) {
       const listItem = list.children[index]
-      const link = find(listItem, n => n.type === 'link')
+      const link = find(listItem, (n) => n.type === 'link')
 
       if (!link) {
         file.message(
@@ -159,7 +159,7 @@ function validateListItems({ ast, file, list, headingLinks, headings, depth }) {
         return
       }
 
-      const subList = find(listItem, n => n.type === 'list')
+      const subList = find(listItem, (n) => n.type === 'list')
 
       if (subList) {
         if (depth < maxListItemDepth) {
